@@ -1,33 +1,26 @@
-import { useState } from 'react'
-
 const EditToDoItem = ({ initValues, onAdd }) => {
-    const [description, setDescription] = useState(initValues.description);
-    const [important, setImportant] = useState(initValues.important);
 
     const onSubmit = (e) => {
         e.preventDefault();
+        const description = e.currentTarget.description.value;
+        const important = e.currentTarget.important.checked;
         if (!description) {
             alert('You need to add a description.');
             return;
         }
 
         onAdd({ id: initValues.id, description, important });
-
-        setDescription('');
-        setImportant(false);
     };
 
     return (
         <form className="todo-item--edit" onSubmit={onSubmit}>
             <div>
                 <label>ToDo</label>
-                <input type="text" placeholder="What's to do?"
-                    value={description} onChange={(e) => { setDescription(e.target.value); }} />
+                <input id='description' type="text" placeholder="What's to do?" defaultValue={initValues.description} />
             </div>
             <div>
                 <label>Important</label>
-                <input type="checkbox" checked={important} value={important}
-                    onChange={(e) => setImportant(e.currentTarget.checked)} />
+                <input id='important' type="checkbox" defaultChecked={initValues.important} />
             </div>
             <input type="submit" value="Save" />
         </form>
